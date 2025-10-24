@@ -1,10 +1,10 @@
 const CACHE_NAME = 'expense-tracker-v1';
 const urlsToCache = [
-  '/',
-  '/index.html',
-  '/styles.css',
-  '/script.js',
-  '/manifest.json',
+  '/expense-tracker/',
+  '/expense-tracker/index.html',
+  '/expense-tracker/styles.css',
+  '/expense-tracker/script.js',
+  '/expense-tracker/manifest.json',
   'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css'
 ];
 
