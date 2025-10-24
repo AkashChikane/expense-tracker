@@ -1,7 +1,8 @@
 // Local Storage Keys
 const STORAGE_KEYS = {
     EXPENSES: 'expenses',
-    SALARY: 'monthlySalary'
+    SALARY: 'monthlySalary',
+    THEME: 'colorTheme'
 };
 
 // Category Icons
@@ -20,9 +21,24 @@ const CATEGORY_ICONS = {
 document.addEventListener('DOMContentLoaded', () => {
     initializeTabs();
     initializeForms();
+    initializeTheme();
     loadData();
     setDefaultDate();
+    registerServiceWorker();
 });
+
+// Register Service Worker
+function registerServiceWorker() {
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('/sw.js')
+            .then(registration => {
+                console.log('Service Worker registered successfully:', registration);
+            })
+            .catch(error => {
+                console.log('Service Worker registration failed:', error);
+            });
+    }
+}
 
 // Tab Navigation
 function initializeTabs() {
@@ -74,6 +90,75 @@ function initializeForms() {
             displayExpenses(btn.dataset.filter);
         });
     });
+}
+
+// Initialize Theme
+function initializeTheme() {
+    const savedTheme = localStorage.getItem(STORAGE_KEYS.THEME) || 'purple';
+    applyTheme(savedTheme);
+    
+    // Theme toggle button
+    const themeToggle = document.getElementById('themeToggle');
+    if (themeToggle) {
+        themeToggle.addEventListener('click', () => {
+            const settingsTab = document.querySelector('[data-tab="add"]');
+            settingsTab.click();
+            setTimeout(() => {
+                document.querySelector('.theme-selector').scrollIntoView({ 
+                    behavior: 'smooth', 
+                    block: 'center' 
+                });
+            }, 100);
+        });
+    }
+    
+    // Theme option buttons
+    const themeOptions = document.querySelectorAll('.theme-option');
+    themeOptions.forEach(option => {
+        option.addEventListener('click', () => {
+            const theme = option.dataset.theme;
+            applyTheme(theme);
+            localStorage.setItem(STORAGE_KEYS.THEME, theme);
+            showNotification(`Theme changed to ${theme}! 🎨`);
+        });
+    });
+}
+
+// Apply Theme
+function applyTheme(theme) {
+    document.documentElement.setAttribute('data-theme', theme);
+    
+    // Update active theme option
+    const themeOptions = document.querySelectorAll('.theme-option');
+    themeOptions.forEach(option => {
+        option.classList.remove('active');
+        if (option.dataset.theme === theme) {
+            option.classList.add('active');
+        }
+    });
+    
+    // Update manifest theme color
+    updateManifestTheme(theme);
+}
+
+// Update Manifest Theme Color
+function updateManifestTheme(theme) {
+    const themeColors = {
+        purple: '#667eea',
+        blue: '#2193b0',
+        green: '#11998e',
+        orange: '#f46b45',
+        pink: '#ee0979',
+        dark: '#232526'
+    };
+    
+    const color = themeColors[theme] || '#667eea';
+    
+    // Update meta theme-color
+    let metaThemeColor = document.querySelector('meta[name="theme-color"]');
+    if (metaThemeColor) {
+        metaThemeColor.setAttribute('content', color);
+    }
 }
 
 // Set default date to today
