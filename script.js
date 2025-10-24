@@ -94,7 +94,7 @@ function initializeForms() {
 
 // Initialize Theme
 function initializeTheme() {
-    const savedTheme = localStorage.getItem(STORAGE_KEYS.THEME) || 'purple';
+    const savedTheme = localStorage.getItem(STORAGE_KEYS.THEME) || 'white';
     applyTheme(savedTheme);
     
     // Theme toggle button
@@ -144,15 +144,15 @@ function applyTheme(theme) {
 // Update Manifest Theme Color
 function updateManifestTheme(theme) {
     const themeColors = {
-        purple: '#667eea',
-        blue: '#2193b0',
-        green: '#11998e',
-        orange: '#f46b45',
-        pink: '#ee0979',
-        dark: '#232526'
+        white: '#ffffff',
+        blue: '#2196F3',
+        teal: '#009688',
+        purple: '#9C27B0',
+        indigo: '#3F51B5',
+        pink: '#E91E63'
     };
     
-    const color = themeColors[theme] || '#667eea';
+    const color = themeColors[theme] || '#ffffff';
     
     // Update meta theme-color
     let metaThemeColor = document.querySelector('meta[name="theme-color"]');
