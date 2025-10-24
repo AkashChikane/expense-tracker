@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expense Tracker 💰</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="app-header">
+            <h1>💰 Expense Tracker</h1>
+            <div class="balance-card">
+                <div class="balance-info">
+                    <span class="balance-label">Monthly Budget</span>
+                    <span class="balance-amount" id="monthlyBudget">₹0</span>
+                </div>
+                <div class="balance-info">
+                    <span class="balance-label">Spent</span>
+                    <span class="balance-amount spent" id="totalSpent">₹0</span>
+                </div>
+                <div class="balance-info">
+                    <span class="balance-label">Remaining</span>
+                    <span class="balance-amount remaining" id="remaining">₹0</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Tab Navigation -->
+        <nav class="tab-nav">
+            <button class="tab-btn active" data-tab="add">
+                <i class="fas fa-plus-circle"></i>
+                <span>Add</span>
+            </button>
+            <button class="tab-btn" data-tab="history">
+                <i class="fas fa-history"></i>
+                <span>History</span>
+            </button>
+            <button class="tab-btn" data-tab="trends">
+                <i class="fas fa-chart-line"></i>
+                <span>Trends</span>
+            </button>
+        </nav>
+
+        <!-- Tab Content -->
+        <main class="tab-content">
+            <!-- Add Expense Tab -->
+            <div class="tab-pane active" id="add-tab">
+                <div class="card">
+                    <h2>📝 Log Expense</h2>
+                    <form id="expenseForm">
+                        <div class="form-group">
+                            <label for="amount">💵 Amount</label>
+                            <input type="number" id="amount" placeholder="Enter amount" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="category">🏷️ Category</label>
+                            <select id="category" required>
+                                <option value="">Select category</option>
+                                <option value="food">🍔 Food & Dining</option>
+                                <option value="transport">🚗 Transport</option>
+                                <option value="shopping">🛍️ Shopping</option>
+                                <option value="entertainment">🎬 Entertainment</option>
+                                <option value="bills">📄 Bills & Utilities</option>
+                                <option value="health">💊 Health</option>
+                                <option value="education">📚 Education</option>
+                                <option value="other">📦 Other</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="description">📋 Description</label>
+                            <input type="text" id="description" placeholder="What did you buy?" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="date">📅 Date</label>
+                            <input type="date" id="date" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-save"></i> Save Expense
+                        </button>
+                    </form>
+                </div>
+
+                <div class="card">
+                    <h2>⚙️ Settings</h2>
+                    <form id="salaryForm">
+                        <div class="form-group">
+                            <label for="salary">💰 Monthly Salary</label>
+                            <input type="number" id="salary" placeholder="Enter your monthly salary">
+                        </div>
+                        <button type="submit" class="btn btn-secondary">
+                            <i class="fas fa-check"></i> Update Salary
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- History Tab -->
+            <div class="tab-pane" id="history-tab">
+                <div class="card">
+                    <div class="history-header">
+                        <h2>📜 Expense History</h2>
+                        <div class="filter-buttons">
+                            <button class="filter-btn active" data-filter="all">All</button>
+                            <button class="filter-btn" data-filter="today">Today</button>
+                            <button class="filter-btn" data-filter="week">Week</button>
+                            <button class="filter-btn" data-filter="month">Month</button>
+                        </div>
+                    </div>
+                    <div id="expenseList" class="expense-list">
+                        <div class="empty-state">
+                            <i class="fas fa-inbox"></i>
+                            <p>No expenses yet. Start logging!</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Trends Tab -->
+            <div class="tab-pane" id="trends-tab">
+                <div class="card">
+                    <h2>📊 Spending Trends</h2>
+                    <div class="trends-summary">
+                        <div class="trend-card">
+                            <i class="fas fa-calendar-day"></i>
+                            <div>
+                                <span class="trend-label">Today</span>
+                                <span class="trend-value" id="todayTotal">₹0</span>
+                            </div>
+                        </div>
+                        <div class="trend-card">
+                            <i class="fas fa-calendar-week"></i>
+                            <div>
+                                <span class="trend-label">This Week</span>
+                                <span class="trend-value" id="weekTotal">₹0</span>
+                            </div>
+                        </div>
+                        <div class="trend-card">
+                            <i class="fas fa-calendar-alt"></i>
+                            <div>
+                                <span class="trend-label">This Month</span>
+                                <span class="trend-value" id="monthTotal">₹0</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h2>🏷️ Category Breakdown</h2>
+                    <div id="categoryBreakdown" class="category-breakdown">
+                        <div class="empty-state">
+                            <i class="fas fa-chart-pie"></i>
+                            <p>No data to display yet</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
